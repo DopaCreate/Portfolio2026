@@ -819,33 +819,33 @@ footer .fc { font-size: 13px; color: var(--muted); }
 
       <div class="ct-links rv d3">
         <a class="ct-link" href="https://wa.me/60172098616" target="_blank" rel="noopener">WhatsApp Me<span class="ct-link-arr">→</span></a>
-        <a class="ct-link" href="#">View Behance<span class="ct-link-arr">→</span></a>
-        <a class="ct-link" href="#">Email Me<span class="ct-link-arr">→</span></a>
+        <a class="ct-link" href="https://www.behance.net/DopaAndrew" target="_blank" rel="noopener">View Behance<span class="ct-link-arr">→</span></a>
+        <a class="ct-link" href="/cdn-cgi/l/email-protection#a9c8c7cddbccded9dbc699999ee9cec4c8c0c587cac6c4">Email Me<span class="ct-link-arr">→</span></a>
       </div>
 
       <p class="ct-closing rv d4">Good ideas deserve strong execution. Let's make yours impossible to ignore.</p>
     </div>
 
     <!-- Right: form -->
-    <form class="ct-form rv d2" id="ctForm" onsubmit="return false">
+    <form class="ct-form rv d2" id="ctForm" action="https://formspree.io/f/mzdqpyno" method="POST">
       <div class="f-row">
         <div class="fg">
           <label for="fn">Name</label>
-          <input type="text" id="fn" placeholder="Your name" />
+          <input type="text" id="fn" name="name" placeholder="Your name" />
         </div>
         <div class="fg">
           <label for="fe">Email</label>
-          <input type="email" id="fe" placeholder="you@email.com" />
+          <input type="email" id="fe" name="email" placeholder="you@email.com" />
         </div>
       </div>
       <div class="fg">
         <label for="fc">Company / Brand</label>
-        <input type="text" id="fc" placeholder="Your company" />
+        <input type="text" id="fc" name="company" placeholder="Your company" />
       </div>
       <div class="f-row">
         <div class="fg">
           <label for="ft">Project Type</label>
-          <select id="ft">
+          <select id="ft" name="project_type">
             <option value="">Select type</option>
             <option>UI/UX Design</option>
             <option>Website Design</option>
@@ -857,7 +857,7 @@ footer .fc { font-size: 13px; color: var(--muted); }
         </div>
         <div class="fg">
           <label for="fb">Budget Range</label>
-          <select id="fb">
+          <select id="fb" name="budget">
             <option value="">Select budget</option>
             <option>Under $1,000</option>
             <option>$1,000 – $3,000</option>
@@ -868,7 +868,7 @@ footer .fc { font-size: 13px; color: var(--muted); }
       </div>
       <div class="fg">
         <label for="fm">Message</label>
-        <textarea id="fm" placeholder="Tell me about your project..."></textarea>
+        <textarea id="fm" name="message" placeholder="Tell me about your project..."></textarea>
       </div>
       <button type="submit" class="btn-send" id="sendBtn">Send Enquiry</button>
     </form>
@@ -883,7 +883,7 @@ footer .fc { font-size: 13px; color: var(--muted); }
 </footer>
 
 <!-- Three.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <!-- React + Babel for Tweaks -->
 <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
@@ -1192,11 +1192,27 @@ function launchBalloons() {
 }
 
 /* ── Form send ── */
-document.getElementById('ctForm').addEventListener('submit',()=>{
-  const b=document.getElementById('sendBtn');
-  b.textContent='Sent ✓'; b.classList.add('sent'); b.disabled=true;
-  setTimeout(()=>{ b.textContent='Send Enquiry'; b.classList.remove('sent'); b.disabled=false; },3500);
-  launchBalloons();
+document.getElementById('ctForm').addEventListener('submit', async function(e){
+  e.preventDefault();
+  const b = document.getElementById('sendBtn');
+  b.textContent = 'Sending…'; b.disabled = true;
+  try {
+    const res = await fetch('https://formspree.io/f/mzdqpyno', {
+      method: 'POST',
+      headers: { 'Accept': 'application/json' },
+      body: new FormData(this)
+    });
+    if (res.ok) {
+      b.textContent = 'Sent ✓'; b.classList.add('sent');
+      this.reset();
+      launchBalloons();
+      setTimeout(()=>{ b.textContent='Send Enquiry'; b.classList.remove('sent'); b.disabled=false; }, 3500);
+    } else {
+      b.textContent = 'Error — try again'; b.disabled = false;
+    }
+  } catch(err) {
+    b.textContent = 'Error — try again'; b.disabled = false;
+  }
 });
 </script>
 <!-- Tweaks mount -->
