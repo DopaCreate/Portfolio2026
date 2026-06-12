@@ -330,7 +330,13 @@ document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
   const items    = Array.from(carousel.querySelectorAll('.c-item'));
   const N        = items.length;
   const ANGLE    = 360 / N;
-  let RADIUS     = Math.min(window.innerWidth * 0.38, 480);
+  function calcRadius() {
+    /* never smaller than the radius needed to keep cards from overlapping */
+    const w    = items[0].offsetWidth || 240;
+    const minR = ((w + 50) / 2) / Math.tan(Math.PI / N);
+    return Math.max(Math.min(window.innerWidth * 0.38, 480), minR);
+  }
+  let RADIUS     = calcRadius();
 
   /* Place items */
   function placeItems(r) {
@@ -423,7 +429,7 @@ document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
 
   /* Resize */
   window.addEventListener('resize', () => {
-    RADIUS = Math.min(window.innerWidth * 0.38, 480);
+    RADIUS = calcRadius();
     placeItems(RADIUS);
   });
 })();
