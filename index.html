@@ -300,11 +300,28 @@ nav.sc { background: rgba(8,8,8,.88); backdrop-filter: blur(20px); padding: 14px
 .wf-n { font-family: var(--serif); font-style: italic; font-size: 12px; color: var(--muted); width: 20px; flex-shrink: 0; transition: color .2s; }
 
 /* ── About ── */
-.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
-.about-copy p { font-size: 17px; line-height: 1.82; color: var(--fg2); margin-bottom: 22px; }
-.about-copy strong { color: var(--fg); font-weight: 600; }
-.about-copy .quote { font-family: var(--serif); font-style: italic; font-size: 20px; color: var(--fg); border-left: 2px solid var(--accent); padding-left: 20px; margin-top: 36px; line-height: 1.5; }
-.skill-panels { display: flex; flex-direction: column; gap: 32px; }
+.ab-head { font-family: var(--serif); font-weight: 400; font-size: clamp(38px, 5vw, 68px); letter-spacing: -.025em; line-height: 1.12; max-width: 920px; }
+.ab-key { position: relative; font-style: italic; color: var(--fg); cursor: default; white-space: nowrap; transition: color .3s ease; }
+.ab-key::after { content: ''; position: absolute; left: 0; bottom: .04em; width: 100%; height: 1px; background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform .5s cubic-bezier(.22,1,.36,1); }
+.ab-key:hover, .ab-key.hot { color: var(--accent); }
+.ab-key:hover::after, .ab-key.hot::after { transform: scaleX(1); }
+.ab-manifesto { max-width: 780px; margin-top: 44px; }
+.ab-manifesto p { font-size: clamp(17px, 1.5vw, 21px); line-height: 1.85; margin-bottom: 20px; }
+.ab-manifesto .w { color: var(--muted); transition: color .4s ease; }
+.ab-manifesto .w.lit { color: var(--fg2); }
+.ab-manifesto .w.str.lit { color: var(--fg); font-weight: 600; }
+.ab-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 80px; perspective: 1400px; }
+.ab-card { position: relative; padding: 30px 28px; background: var(--card); border: 1px solid var(--border); border-radius: 6px; transform-style: preserve-3d; transition: opacity .35s ease, border-color .35s ease, background .35s ease, transform .25s ease; }
+.ab-num { position: absolute; top: 26px; right: 28px; font-family: var(--serif); font-style: italic; font-size: 15px; color: var(--muted); transition: color .35s ease; }
+.ab-cards.focus .ab-card { opacity: .3; }
+.ab-cards.focus .ab-card.hot { opacity: 1; border-color: rgba(224,120,72,.45); background: rgba(224,120,72,.04); }
+.ab-card.hot .ab-num { color: var(--accent); }
+.ab-quote { max-width: 680px; margin: 92px auto 0; text-align: center; }
+.ab-quote-line { width: 56px; height: 1px; background: var(--accent); margin: 0 auto 28px; transform: scaleX(0); transition: transform .9s cubic-bezier(.22,1,.36,1) .3s; }
+.ab-quote.in .ab-quote-line { transform: scaleX(1); }
+.ab-quote p { font-family: var(--serif); font-style: italic; font-size: clamp(20px, 2.2vw, 27px); line-height: 1.55; color: var(--fg); }
+.ab-langs { display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 48px; }
+.ab-langs-label { font-family: var(--label); font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); margin-right: 8px; }
 .sp-head { font-family: var(--label); font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
 .tags { display: flex; flex-wrap: wrap; gap: 8px; }
 .tag { font-size: 13px; color: var(--fg2); padding: 6px 13px; border: 1px solid var(--border); border-radius: 20px; background: var(--card); transition: border-color .2s, color .2s; }
@@ -495,7 +512,9 @@ footer .fc { font-size: 13px; color: var(--muted); }
   .sec { padding: 80px 28px; }
   #intro { padding: 72px 28px; }
   footer { padding: 22px 28px; }
-  .about-grid, .ct-grid { grid-template-columns: 1fr; gap: 48px; }
+  .ct-grid { grid-template-columns: 1fr; gap: 48px; }
+  .ab-cards { grid-template-columns: 1fr; margin-top: 56px; }
+  .ab-quote { margin-top: 64px; }
   .sv-grid { grid-template-columns: 1fr 1fr; }
   .nav-links { gap: 20px; }
   .tl-row { grid-template-columns: 80px 1px 1fr; gap: 0 22px; }
@@ -628,45 +647,51 @@ footer .fc { font-size: 13px; color: var(--muted); }
 <!-- ═══ ABOUT ═══ -->
 <section id="about" class="sec">
   <p class="eyebrow rv">About</p>
-  <div class="about-grid">
-    <div class="about-copy">
-      <h2 class="s-title rv d1">I connect design,<br>content &amp; strategy.</h2>
-      <p class="rv d2">I'm Andrew Lee, a Creative Strategist &amp; Digital Experience Designer from Malaysia. My work sits between UI/UX design, multimedia storytelling, and marketing strategy.</p>
-      <p class="rv d3">I don't only design screens. I think about how people <strong>see</strong>, feel, understand, and respond to digital experiences — then build systems that guide them forward.</p>
-      <p class="rv d4 quote">"Good design should not just look beautiful. It should create attention, guide decisions, and make people remember the brand."</p>
-    </div>
-    <div class="skill-panels">
-      <div class="rv d1">
-        <div class="sp-head">UI/UX Design</div>
-        <div class="tags">
-          <span class="tag">Interface Design</span><span class="tag">UX Design</span>
-          <span class="tag">Wireframing</span><span class="tag">Prototyping</span>
-          <span class="tag">Responsive Design</span><span class="tag">Design Systems</span>
-        </div>
-      </div>
-      <div class="rv d2">
-        <div class="sp-head">Multimedia Design</div>
-        <div class="tags">
-          <span class="tag">Social Media</span><span class="tag">Campaign Visuals</span>
-          <span class="tag">Motion Direction</span><span class="tag">3D Graphics</span>
-          <span class="tag">Promotional Banners</span><span class="tag">Visual Storytelling</span>
-        </div>
-      </div>
-      <div class="rv d3">
-        <div class="sp-head">Marketing Strategy</div>
-        <div class="tags">
-          <span class="tag">Campaign Direction</span><span class="tag">Brand Positioning</span>
-          <span class="tag">Content Strategy</span><span class="tag">Creative Direction</span>
-          <span class="tag">Conversion Design</span><span class="tag">Digital Marketing</span>
-        </div>
-      </div>
-      <div class="rv d4">
-        <div class="sp-head">Languages</div>
-        <div class="tags">
-          <span class="tag">English</span><span class="tag">Chinese</span><span class="tag">Malay</span>
-        </div>
+  <h2 class="ab-head rv d1">I connect <span class="ab-key" data-key="design">design</span>, <span class="ab-key" data-key="content">content</span> &amp; <span class="ab-key" data-key="strategy">strategy</span>.</h2>
+
+  <div class="ab-manifesto rv d2" id="abManifesto">
+    <p>I'm Andrew Lee, a Creative Strategist &amp; Digital Experience Designer from Malaysia. My work sits between UI/UX design, multimedia storytelling, and marketing strategy.</p>
+    <p>I don't only design screens. I think about how people <strong>see</strong>, feel, understand, and respond to digital experiences — then build systems that guide them forward.</p>
+  </div>
+
+  <div class="ab-cards rv d2" id="abCards">
+    <div class="ab-card" data-key="design">
+      <span class="ab-num">01</span>
+      <div class="sp-head">UI/UX Design</div>
+      <div class="tags">
+        <span class="tag">Interface Design</span><span class="tag">UX Design</span>
+        <span class="tag">Wireframing</span><span class="tag">Prototyping</span>
+        <span class="tag">Responsive Design</span><span class="tag">Design Systems</span>
       </div>
     </div>
+    <div class="ab-card" data-key="content">
+      <span class="ab-num">02</span>
+      <div class="sp-head">Multimedia Design</div>
+      <div class="tags">
+        <span class="tag">Social Media</span><span class="tag">Campaign Visuals</span>
+        <span class="tag">Motion Direction</span><span class="tag">3D Graphics</span>
+        <span class="tag">Promotional Banners</span><span class="tag">Visual Storytelling</span>
+      </div>
+    </div>
+    <div class="ab-card" data-key="strategy">
+      <span class="ab-num">03</span>
+      <div class="sp-head">Marketing Strategy</div>
+      <div class="tags">
+        <span class="tag">Campaign Direction</span><span class="tag">Brand Positioning</span>
+        <span class="tag">Content Strategy</span><span class="tag">Creative Direction</span>
+        <span class="tag">Conversion Design</span><span class="tag">Digital Marketing</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="ab-quote rv">
+    <div class="ab-quote-line"></div>
+    <p>"Good design should not just look beautiful. It should create attention, guide decisions, and make people remember the brand."</p>
+  </div>
+
+  <div class="ab-langs rv">
+    <span class="ab-langs-label">Languages</span>
+    <span class="tag">English</span><span class="tag">Chinese</span><span class="tag">Malay</span>
   </div>
 </section>
 
@@ -820,7 +845,7 @@ footer .fc { font-size: 13px; color: var(--muted); }
       <div class="ct-links rv d3">
         <a class="ct-link" href="https://wa.me/60172098616" target="_blank" rel="noopener">WhatsApp Me<span class="ct-link-arr">→</span></a>
         <a class="ct-link" href="https://www.behance.net/DopaAndrew" target="_blank" rel="noopener">View Behance<span class="ct-link-arr">→</span></a>
-        <a class="ct-link" href="/cdn-cgi/l/email-protection#c3a2ada7b1a6b4b3b1acf3f3f483a4aea2aaafeda0acae" target="_blank" rel="noopener">Email Me<span class="ct-link-arr">→</span></a>
+        <a class="ct-link" href="/cdn-cgi/l/email-protection#c8a9a6acbaadbfb8baa7f8f8ff88afa5a9a1a4e6aba7a5" target="_blank" rel="noopener">Email Me<span class="ct-link-arr">→</span></a>
       </div>
 
       <p class="ct-closing rv d4">Good ideas deserve strong execution. Let's make yours impossible to ignore.</p>
@@ -1053,6 +1078,74 @@ document.addEventListener('mouseenter',()=>{ cur.style.opacity='1'; curR.style.o
 /* ── Nav shrink on scroll ── */
 const nav=document.getElementById('nav');
 window.addEventListener('scroll',()=>nav.classList.toggle('sc',scrollY>60),{passive:true});
+
+/* ── About: interactive ── */
+(() => {
+  const mani = document.getElementById('abManifesto');
+  if (!mani) return;
+
+  /* split manifesto into word spans (preserving <strong> emphasis) */
+  const words = [];
+  mani.querySelectorAll('p').forEach(p => {
+    [...p.childNodes].forEach(node => {
+      const isStr = node.nodeType === 1;
+      const parts = node.textContent.split(/\s+/).filter(Boolean);
+      const frag = document.createDocumentFragment();
+      parts.forEach(wd => {
+        const s = document.createElement('span');
+        s.className = 'w' + (isStr ? ' str' : '');
+        s.textContent = wd;
+        words.push(s);
+        frag.appendChild(s);
+        frag.appendChild(document.createTextNode(' '));
+      });
+      p.replaceChild(frag, node);
+    });
+  });
+
+  /* scroll-driven word reveal */
+  function abReveal() {
+    const r = mani.getBoundingClientRect();
+    const vh = window.innerHeight;
+    const start = vh * 0.9, end = vh * 0.38;
+    const t = Math.min(1, Math.max(0, (start - r.top) / (r.height + start - end)));
+    const n = Math.floor(t * words.length * 1.12);
+    words.forEach((w, i) => w.classList.toggle('lit', i < n));
+  }
+  document.addEventListener('scroll', abReveal, { passive: true });
+  abReveal();
+
+  /* hover linkage: headline keys ↔ discipline cards */
+  const keys = document.querySelectorAll('.ab-key');
+  const cardWrap = document.getElementById('abCards');
+  const cards = cardWrap.querySelectorAll('.ab-card');
+  function setHot(key) {
+    cardWrap.classList.toggle('focus', !!key);
+    cards.forEach(c => c.classList.toggle('hot', c.dataset.key === key));
+    keys.forEach(k => k.classList.toggle('hot', k.dataset.key === key));
+  }
+  keys.forEach(k => {
+    k.addEventListener('mouseenter', () => setHot(k.dataset.key));
+    k.addEventListener('mouseleave', () => setHot(null));
+  });
+  cards.forEach(c => {
+    c.addEventListener('mouseenter', () => setHot(c.dataset.key));
+    c.addEventListener('mouseleave', () => setHot(null));
+  });
+
+  /* subtle 3D tilt on cards (desktop only) */
+  if (window.matchMedia('(hover:hover) and (pointer:fine)').matches) {
+    cards.forEach(c => {
+      c.addEventListener('mousemove', e => {
+        const r = c.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - .5;
+        const y = (e.clientY - r.top) / r.height - .5;
+        c.style.transform = `rotateY(${(x * 8).toFixed(2)}deg) rotateX(${(-y * 8).toFixed(2)}deg) translateY(-3px)`;
+      });
+      c.addEventListener('mouseleave', () => { c.style.transform = ''; });
+    });
+  }
+})();
 
 /* ── Scroll reveal ── */
 const obs=new IntersectionObserver(entries=>{
